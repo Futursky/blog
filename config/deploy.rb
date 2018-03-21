@@ -18,7 +18,7 @@ set :repo_url, "git@github.com:Futursky/blog.git"
 # set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
 # Default value for :pty is false
-set :pty, true
+set :pty, false
 
 # Default value for :linked_files is []
 set :linked_files, ["config/application.yml"]
@@ -53,21 +53,22 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 set :puma_preload_app, false
 
-
 set :nvm_type, :user
 set :nvm_node, 'v8.10.0'
-set :nvm_map_bins, %w{node npm}
+set :nvm_map_bins, %w{node npm ng}
 
-set :npm_target_path, -> { release_path.join('app-frontend') } # default not set
-set :npm_flags, '--production --silent --no-progress'    # default
-set :npm_roles, :all                                     # default
-set :npm_env_variables, {}                               # default
-
+set :npm_target_path, -> { release_path.join('app-frontend') }
+set :npm_flags, '--silent --no-progress'
+set :npm_roles, :all
+set :npm_env_variables, {}
 
 namespace :deploy do
+  after 'finishing', 'frontend'
   task :frontend do
     on roles :all do
-      execute "cd #{current_path}/app-frontend && nvm use --lts && npm install && ng build -prod"
+      within release_path.join('app-frontend') do
+        execute :ng, "build -prod"
+      end
     end
   end
 end
