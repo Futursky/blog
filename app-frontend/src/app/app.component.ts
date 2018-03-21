@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   posts;
 
   constructor(private http:HttpClient){
-    this.http.get('http://localhost:3000/posts.json')
+    this.http.get(environment.apiUrl + '/posts.json')
       .subscribe(res => this.posts = res);
   }
 }
