@@ -54,9 +54,15 @@ set :puma_init_active_record, true
 set :puma_preload_app, false
 
 
+set :nvm_type, :user
+set :nvm_node, 'v0.10.21'
+set :nvm_map_bins, %w{node npm}
+
+
 namespace :deploy do
-  desc "reload the database with seed data"
-  task :seed do
-    run "cd #{current_path}; rake db:seed RAILS_ENV=#{fetch(:rails_env, 'production')}"
+  task :frontend do
+    on roles :all do
+      execute "cd #{current_path}/app-frontend && nvm use --lts && npm install && ng build -prod"
+    end
   end
 end
