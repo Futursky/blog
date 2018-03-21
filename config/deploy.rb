@@ -58,7 +58,7 @@ set :nvm_type, :user
 set :nvm_node, 'v8.10.0'
 set :nvm_map_bins, %w{node npm}
 
-set :npm_target_path, -> { release_path.join('subdir') } # default not set
+set :npm_target_path, -> { release_path.join('app-frontend') } # default not set
 set :npm_flags, '--production --silent --no-progress'    # default
 set :npm_roles, :all                                     # default
 set :npm_env_variables, {}                               # default
