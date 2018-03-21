@@ -55,7 +55,7 @@ set :puma_preload_app, false
 
 
 set :nvm_type, :user
-set :nvm_node, 'v0.10.21'
+set :nvm_node, 'v8.10.0'
 set :nvm_map_bins, %w{node npm}
 
 
